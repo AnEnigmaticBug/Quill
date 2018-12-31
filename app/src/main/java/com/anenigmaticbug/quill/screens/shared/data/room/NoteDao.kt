@@ -15,7 +15,7 @@ interface NoteDao {
     fun getNoteById(id: Id): Flowable<DataLayerNote>
 
     @Insert(onConflict = OnConflictStrategy.ABORT)
-    fun insertNote(note: DataLayerNote)
+    fun insertNote(note: DataLayerNote): Long
 
     @Update
     fun updateNote(note: DataLayerNote)

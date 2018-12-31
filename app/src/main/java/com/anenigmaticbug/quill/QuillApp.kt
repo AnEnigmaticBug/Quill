@@ -4,6 +4,7 @@ import android.app.Application
 import com.anenigmaticbug.quill.di.shared.AppComponent
 import com.anenigmaticbug.quill.di.shared.AppModule
 import com.anenigmaticbug.quill.di.shared.DaggerAppComponent
+import com.jakewharton.threetenabp.AndroidThreeTen
 
 class QuillApp : Application() {
 
@@ -18,5 +19,7 @@ class QuillApp : Application() {
         appComponent = DaggerAppComponent.builder()
             .appModule(AppModule(this))
             .build()
+
+        AndroidThreeTen.init(this)
     }
 }

@@ -16,3 +16,7 @@ fun<T> LiveData<T>.toMut(): MutableLiveData<T> {
         else               -> throw IllegalArgumentException("Not a MutableLiveData")
     }
 }
+
+fun<T> List<T>.prepend(vararg elems: T): List<T> {
+    return elems.toMutableList() + this
+}

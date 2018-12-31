@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.anenigmaticbug.quill.R
 import com.anenigmaticbug.quill.screens.notelist.view.model.ViewLayerTag
-import kotlinx.android.synthetic.main.row_tags_rcy.view.*
+import kotlinx.android.synthetic.main.row_tags_rcy_note_list.view.*
 
 class TagsAdapter(private val clickListener: ClickListener) : ListAdapter<ViewLayerTag, TagsAdapter.TagVHolder>(DiffCallback()) {
 
@@ -20,7 +20,7 @@ class TagsAdapter(private val clickListener: ClickListener) : ListAdapter<ViewLa
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TagVHolder {
-        val rootPOV = LayoutInflater.from(parent.context).inflate(R.layout.row_tags_rcy, parent, false)
+        val rootPOV = LayoutInflater.from(parent.context).inflate(R.layout.row_tags_rcy_note_list, parent, false)
         return TagVHolder(rootPOV)
     }
 

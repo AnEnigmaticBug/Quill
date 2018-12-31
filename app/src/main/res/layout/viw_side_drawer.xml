@@ -18,7 +18,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/row_tags_rcy" />
+        tools:listitem="@layout/row_tags_rcy_note_list" />
 
     <View
         android:id="@+id/topBarSecBackgroundPOV"

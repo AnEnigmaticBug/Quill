@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/datePartLBL"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fira_mono"
+        android:includeFontPadding="false"
+        android:textColor="@color/blk02"
+        android:textSize="48sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="21" />
+
+    <TextView
+        android:id="@+id/nonDatePartLBL"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/actor"
+        android:textAllCaps="true"
+        android:textColor="@color/blk03"
+        app:layout_constraintStart_toEndOf="@+id/datePartLBL"
+        app:layout_constraintTop_toTopOf="@+id/datePartLBL"
+        tools:text="Nov 2018 10:29" />
+
+    <TextView
+        android:id="@+id/descriptionLBL"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="@font/actor"
+        android:textAllCaps="true"
+        app:layout_constraintBottom_toBottomOf="@+id/datePartLBL"
+        app:layout_constraintStart_toStartOf="@+id/nonDatePartLBL"
+        tools:text="Modification Date" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -36,6 +36,10 @@ dependencies {
     kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
     testImplementation "androidx.arch.core:core-testing:2.0.0"
 
+    def dagger_version = '2.19'
+    implementation "com.google.dagger:dagger:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha3'
 
     testImplementation 'junit:junit:4.12'

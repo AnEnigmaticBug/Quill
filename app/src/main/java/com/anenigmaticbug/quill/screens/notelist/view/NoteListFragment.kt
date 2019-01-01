@@ -7,12 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
 import androidx.slidingpanelayout.widget.SlidingPaneLayout
 import com.anenigmaticbug.quill.R
+import com.anenigmaticbug.quill.screens.editnote.view.EditNoteFragment
 import com.anenigmaticbug.quill.screens.notelist.NoteListViewModel
 import com.anenigmaticbug.quill.screens.notelist.NoteListViewModelFactory
 import com.anenigmaticbug.quill.screens.notelist.view.adapters.NotesAdapter
@@ -38,6 +40,13 @@ class NoteListFragment : Fragment(), NotesAdapter.ClickListener, TagsAdapter.Cli
 
         rootPOV.menuBTN.setOnClickListener {
             (rootPOV as SlidingPaneLayout).openPane()
+        }
+
+        rootPOV.addNoteBTN.setOnClickListener {
+            activity!!.supportFragmentManager.beginTransaction()
+                .replace(R.id.navHostPOV, EditNoteFragment().also { it.arguments = bundleOf("ID" to null) })
+                .addToBackStack(null)
+                .commit()
         }
 
         rootPOV.notesRCY.setOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -99,6 +108,10 @@ class NoteListFragment : Fragment(), NotesAdapter.ClickListener, TagsAdapter.Cli
     }
 
     override fun onNoteOfIdSelected(id: Id) {
+        activity!!.supportFragmentManager.beginTransaction()
+            .replace(R.id.navHostPOV, EditNoteFragment().also { it.arguments = bundleOf("ID" to id) })
+            .addToBackStack(null)
+            .commit()
     }
 
     override fun onTagSelected(tag: String) {

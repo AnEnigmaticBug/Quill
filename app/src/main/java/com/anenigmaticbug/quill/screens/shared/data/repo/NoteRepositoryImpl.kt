@@ -30,11 +30,11 @@ class NoteRepositoryImpl(private val noteDao: NoteDao) : NoteRepository {
     }
 
     override fun insertNote(note: Note): Single<Id> {
-        return Single.just(
+        return Single.fromCallable {
             noteDao.insertNote(
-                if(note.id == 0L) { note } else { note.copy(id = 0) }.toDataLayerNote()
+                if (note.id == 0L) { note } else { note.copy(id = 0) }.toDataLayerNote()
             )
-        ).subscribeOn(Schedulers.io())
+        }.subscribeOn(Schedulers.io())
     }
 
     override fun updateNote(note: Note): Completable {

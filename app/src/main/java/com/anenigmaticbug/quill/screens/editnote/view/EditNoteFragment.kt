@@ -17,6 +17,7 @@ import com.anenigmaticbug.quill.R
 import com.anenigmaticbug.quill.screens.editnote.EditNoteViewModel
 import com.anenigmaticbug.quill.screens.editnote.EditNoteViewModelFactory
 import com.anenigmaticbug.quill.screens.editnote.view.adapters.TagsAdapter
+import com.anenigmaticbug.quill.screens.editnote.view.dialogs.InsertTagDialog
 import com.anenigmaticbug.quill.screens.editnote.view.model.UiOrder
 import com.anenigmaticbug.quill.screens.editnote.view.model.ViewLayerNote
 import kotlinx.android.synthetic.main.fra_edit_note.view.*
@@ -73,6 +74,10 @@ class EditNoteFragment : Fragment(), TagsAdapter.ClickListener {
 
         rootPOV.infoBTN.setOnClickListener {
             (rootPOV as DrawerLayout).openDrawer(GravityCompat.END)
+        }
+        
+        rootPOV.addTagBTN.setOnClickListener {
+            InsertTagDialog().show(childFragmentManager, "AddTag")
         }
 
         viewModel.order.observe(this, Observer {

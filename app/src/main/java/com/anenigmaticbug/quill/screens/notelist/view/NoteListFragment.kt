@@ -127,6 +127,12 @@ class NoteListFragment : Fragment(), NotesAdapter.ClickListener, TagsAdapter.Cli
             }
         })
 
+        viewModel.toast.observe(this, Observer {
+            if(it != null) {
+                Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+            }
+        })
+
         viewModel.order.observe(this, Observer {
             when(it) {
                 is UiOrder.ShowWorking -> showWorkingState(it.tags, it.notes)
@@ -142,6 +148,22 @@ class NoteListFragment : Fragment(), NotesAdapter.ClickListener, TagsAdapter.Cli
             .replace(R.id.navHostPOV, EditNoteFragment().also { it.arguments = bundleOf("ID" to id) })
             .addToBackStack(null)
             .commit()
+    }
+
+    override fun onNoteOfIdTrashed(id: Id) {
+        viewModel.onTrashNoteAction(id)
+    }
+
+    override fun onNoteOfIdDeleted(id: Id) {
+        viewModel.onDeleteNoteAction(id)
+    }
+
+    override fun onNoteOfIdRestored(id: Id) {
+        viewModel.onRestoreNoteAction(id)
+    }
+
+    override fun onNoteOfIdEMailed(id: Id) {
+        TODO("Add the ability to e-mail notes")
     }
 
     override fun onTagSelected(tag: String) {

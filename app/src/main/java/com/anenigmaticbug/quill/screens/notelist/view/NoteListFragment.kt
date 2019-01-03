@@ -2,6 +2,7 @@ package com.anenigmaticbug.quill.screens.notelist.view
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -137,6 +138,7 @@ class NoteListFragment : Fragment(), NotesAdapter.ClickListener, TagsAdapter.Cli
             when(it) {
                 is UiOrder.ShowWorking -> showWorkingState(it.tags, it.notes)
                 is UiOrder.ShowFailure -> showFailureState(it.message)
+                is UiOrder.SendEmail   -> sendEmail(it.heading, it.content)
             }
         })
 
@@ -163,7 +165,7 @@ class NoteListFragment : Fragment(), NotesAdapter.ClickListener, TagsAdapter.Cli
     }
 
     override fun onNoteOfIdEMailed(id: Id) {
-        TODO("Add the ability to e-mail notes")
+        viewModel.onSendEmailAction(id)
     }
 
     override fun onTagSelected(tag: String) {
@@ -248,5 +250,15 @@ class NoteListFragment : Fragment(), NotesAdapter.ClickListener, TagsAdapter.Cli
 
     private fun showFailureState(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun sendEmail(heading: String, content: String) {
+        val intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_SUBJECT, heading)
+            putExtra(Intent.EXTRA_TEXT, content)
+            type = "text/plain"
+        }
+        startActivity(Intent.createChooser(intent, "Send email using:"))
     }
 }

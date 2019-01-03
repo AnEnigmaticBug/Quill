@@ -30,6 +30,7 @@ class NoteListViewModel(private val nRepo: NoteRepository) : ViewModel() {
 
     private val d1 = CompositeDisposable()
     private val d2 = CompositeDisposable()
+    private val d3 = CompositeDisposable()
 
 
     init {
@@ -102,6 +103,19 @@ class NoteListViewModel(private val nRepo: NoteRepository) : ViewModel() {
 
     fun onRestoreNoteAction(id: Id) {
         setTrashed(id, false)
+    }
+
+    fun onSendEmailAction(id: Id) {
+        d3.set(nRepo.getNoteById(id)
+            .take(1)
+            .subscribe(
+                { _note ->
+                    order.toMut().postValue(UiOrder.SendEmail(_note.heading, _note.content))
+                },
+                {
+                    toast.toMut().postValue("Couldn't send email")
+                }
+            ))
     }
 
 
@@ -183,5 +197,6 @@ class NoteListViewModel(private val nRepo: NoteRepository) : ViewModel() {
         super.onCleared()
         d1.clear()
         d2.clear()
+        d3.clear()
     }
 }

@@ -5,7 +5,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginBottom="8dp"
-    android:background="@drawable/sh_capsule_16dp"
+    android:background="@drawable/sh_rounded_rectangle_16dp"
     android:backgroundTint="@color/red01"
     android:paddingStart="2dp"
     android:paddingTop="2dp"

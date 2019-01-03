@@ -5,6 +5,8 @@
     android:id="@+id/rootPOV"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/sh_rounded_rectangle_16dp"
+    android:backgroundTint="@color/wht01"
     android:maxWidth="300dp"
     android:minWidth="240dp">
 
@@ -16,8 +18,8 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="12dp"
         android:fontFamily="@font/actor"
-        android:text="Tag names can't include spaces and tabs. Hyphens and numbers are allowed."
-        android:textSize="16sp"
+        android:text="You can use alphabets, numbers and hyphens."
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,19 +37,20 @@
         android:hint="#my-tag"
         android:inputType="textPersonName"
         android:singleLine="true"
-        android:textSize="20sp"
+        android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="@+id/instructionsLBL"
         app:layout_constraintStart_toStartOf="@+id/instructionsLBL"
         app:layout_constraintTop_toBottomOf="@+id/instructionsLBL" />
 
     <TextView
         android:id="@+id/messageLBL"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:fontFamily="@font/actor"
         android:text="Blank tags aren't allowed"
-        android:textSize="16sp"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/tagTXT"
         app:layout_constraintStart_toStartOf="@+id/tagTXT"
         app:layout_constraintTop_toBottomOf="@+id/tagTXT"
         tools:text="The entered text is a valid tag." />

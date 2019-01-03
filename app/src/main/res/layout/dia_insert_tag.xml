@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootPOV"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:maxWidth="300dp"
+    android:minWidth="240dp">
+
+    <TextView
+        android:id="@+id/instructionsLBL"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="12dp"
+        android:fontFamily="@font/actor"
+        android:text="Tag names can't include spaces and tabs. Hyphens and numbers are allowed."
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/tagTXT"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@color/clear"
+        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-0123456789"
+        android:ems="10"
+        android:fontFamily="@font/actor"
+        android:hint="#my-tag"
+        android:inputType="textPersonName"
+        android:singleLine="true"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/instructionsLBL"
+        app:layout_constraintStart_toStartOf="@+id/instructionsLBL"
+        app:layout_constraintTop_toBottomOf="@+id/instructionsLBL" />
+
+    <TextView
+        android:id="@+id/messageLBL"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:fontFamily="@font/actor"
+        android:text="Blank tags aren't allowed"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/tagTXT"
+        app:layout_constraintTop_toBottomOf="@+id/tagTXT"
+        tools:text="The entered text is a valid tag." />
+
+    <ImageView
+        android:id="@+id/cancelBTN"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="16dp"
+        android:tint="@color/gry01"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/messageLBL"
+        app:srcCompat="@drawable/ic_close_30dp_30dp" />
+
+    <ImageView
+        android:id="@+id/doneBTN"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:tint="@color/gry01"
+        app:layout_constraintBottom_toBottomOf="@+id/cancelBTN"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/cancelBTN"
+        app:srcCompat="@drawable/ic_done_30dp_30dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

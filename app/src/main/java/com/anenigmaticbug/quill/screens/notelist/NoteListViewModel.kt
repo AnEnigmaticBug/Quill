@@ -1,5 +1,6 @@
 package com.anenigmaticbug.quill.screens.notelist
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -7,6 +8,7 @@ import com.anenigmaticbug.quill.R
 import com.anenigmaticbug.quill.screens.notelist.view.model.UiOrder
 import com.anenigmaticbug.quill.screens.notelist.view.model.ViewLayerNote
 import com.anenigmaticbug.quill.screens.notelist.view.model.ViewLayerTag
+import com.anenigmaticbug.quill.screens.shared.core.model.Id
 import com.anenigmaticbug.quill.screens.shared.core.model.Note
 import com.anenigmaticbug.quill.screens.shared.data.repo.NoteRepository
 import com.anenigmaticbug.quill.util.*
@@ -19,6 +21,7 @@ import org.threeten.bp.ZoneOffset
 class NoteListViewModel(private val nRepo: NoteRepository) : ViewModel() {
 
     val order: LiveData<UiOrder> = MutableLiveData()
+    val toast: LiveData<String?> = MutableLiveData()
 
 
     // To remember the tag which was selected before the user used search.
@@ -26,6 +29,7 @@ class NoteListViewModel(private val nRepo: NoteRepository) : ViewModel() {
 
 
     private val d1 = CompositeDisposable()
+    private val d2 = CompositeDisposable()
 
 
     init {
@@ -80,6 +84,52 @@ class NoteListViewModel(private val nRepo: NoteRepository) : ViewModel() {
         onTagSelectAction(lastSelectedTag)
     }
 
+    fun onTrashNoteAction(id: Id) {
+        setTrashed(id, true)
+    }
+
+    @SuppressLint("CheckResult")
+    fun onDeleteNoteAction(id: Id) {
+        nRepo.deleteNoteById(id).subscribe(
+            {
+                toast.toMut().postValue("Note deleted")
+            },
+            {
+                toast.toMut().postValue("Couldn't delete note")
+            }
+        )
+    }
+
+    fun onRestoreNoteAction(id: Id) {
+        setTrashed(id, false)
+    }
+
+
+    private fun setTrashed(id: Id, value: Boolean) {
+        d2.set(nRepo.getNoteById(id)
+            .take(1)
+            .subscribe(
+                { _note ->
+                    nRepo.updateNote(_note.copy(isTrashed = value))
+                        .subscribe(
+                            {
+                                val message = when(value) {
+                                    true  -> "Note trashed"
+                                    false -> "Note restored"
+                                }
+                                toast.toMut().postValue(message)
+                            },
+                            {
+                                toast.toMut().postValue("Couldn't finish the action")
+                            }
+                        )
+                },
+                {
+                    order.toMut().postValue(UiOrder.ShowFailure("Something went wrong :("))
+                }
+            ))
+    }
+
 
     private fun List<Note>.toViewLayer(): List<ViewLayerNote> {
 
@@ -132,5 +182,6 @@ class NoteListViewModel(private val nRepo: NoteRepository) : ViewModel() {
     override fun onCleared() {
         super.onCleared()
         d1.clear()
+        d2.clear()
     }
 }

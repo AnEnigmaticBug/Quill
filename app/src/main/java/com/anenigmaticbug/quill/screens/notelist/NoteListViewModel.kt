@@ -21,6 +21,10 @@ class NoteListViewModel(private val nRepo: NoteRepository) : ViewModel() {
     val order: LiveData<UiOrder> = MutableLiveData()
 
 
+    // To remember the tag which was selected before the user used search.
+    private lateinit var lastSelectedTag: String
+
+
     private val d1 = CompositeDisposable()
 
 
@@ -30,6 +34,7 @@ class NoteListViewModel(private val nRepo: NoteRepository) : ViewModel() {
 
 
     fun onTagSelectAction(tag: String) {
+        lastSelectedTag = tag
         val combiner = BiFunction { t1: List<String>, t2: List<Note> ->
             val notesTag = ViewLayerTag("Notes", R.drawable.ic_notes_24dp_24dp, "Notes" == tag)
             val trashTag = ViewLayerTag("Trash", R.drawable.ic_trash_24dp_24dp, "Trash" == tag)
@@ -48,6 +53,31 @@ class NoteListViewModel(private val nRepo: NoteRepository) : ViewModel() {
                     order.toMut().postValue(UiOrder.ShowFailure("Something went wrong while retrieving your notes"))
                 }
             ))
+    }
+
+    fun onSearchTextChanged(query: String) {
+        val combiner = BiFunction { t1: List<String>, t2: List<Note> ->
+            val notesTag = ViewLayerTag("Notes", R.drawable.ic_notes_24dp_24dp, "Notes" == lastSelectedTag)
+            val trashTag = ViewLayerTag("Trash", R.drawable.ic_trash_24dp_24dp, "Trash" == lastSelectedTag)
+
+            val tags = t1.map { ViewLayerTag(it, R.drawable.ic_tag_24dp_24dp, it == lastSelectedTag) }.prepend(notesTag, trashTag)
+
+            UiOrder.ShowWorking(tags, t2.filterByQuery(query).sortedByDescending { it.lastModified }.toViewLayer())
+        }
+
+        d1.set(Flowable.combineLatest(nRepo.getAllTags(), nRepo.getAllNotes(), combiner)
+            .subscribe(
+                {
+                    order.toMut().postValue(it)
+                },
+                {
+                    order.toMut().postValue(UiOrder.ShowFailure("Something went wrong while retrieving your notes"))
+                }
+            ))
+    }
+
+    fun onEndSearchAction() {
+        onTagSelectAction(lastSelectedTag)
     }
 
 
@@ -83,6 +113,18 @@ class NoteListViewModel(private val nRepo: NoteRepository) : ViewModel() {
             "Notes" -> this.filter { !it.isTrashed }
             "Trash" -> this.filter {  it.isTrashed }
             else    -> this.filter { !it.isTrashed && tag in it.tags }
+        }
+    }
+
+    private fun List<Note>.filterByQuery(query: String): List<Note> {
+
+        fun String.containsIgnoreCase(substring: String): Boolean {
+            return this.toLowerCase().contains(substring.toLowerCase())
+        }
+
+        return this.filter {
+            // Search is case insensitive for heading and content. For tags it is case-sensitive
+            it.heading.containsIgnoreCase(query) || it.heading.containsIgnoreCase(query) || query in it.tags
         }
     }
 

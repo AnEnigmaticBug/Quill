@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/searchBarLIN"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:alpha="0"
+    android:gravity="center_vertical">
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_weight="1"
+        android:background="@drawable/sh_rounded_rectangle_04dp"
+        android:backgroundTint="@color/wht04"
+        android:gravity="left|center_vertical"
+        android:paddingStart="4dp"
+        android:paddingTop="4dp"
+        android:paddingEnd="4dp"
+        android:paddingBottom="4dp"
+        app:layout_constraintEnd_toStartOf="@+id/cancelSearchBTN"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/searchIMG"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:tint="@color/gry01"
+            app:srcCompat="@drawable/ic_search_20dp_20dp" />
+
+        <EditText
+            android:id="@+id/queryTXT"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_weight="1"
+            android:background="@color/clear"
+            android:fontFamily="@font/fira_mono"
+            android:hint="Search notes"
+            android:singleLine="true"
+            android:textColor="@color/gry01"
+            android:textColorHint="@color/gry01" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/cancelSearchBTN"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
+        android:fontFamily="@font/actor"
+        android:text="Cancel"
+        android:textColor="@color/gry01"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/linearLayout2" />
+
+</LinearLayout>

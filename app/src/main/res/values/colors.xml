@@ -16,6 +16,7 @@
     <color name="wht01">#FFFFFFFF</color>
     <color name="wht02">#FFFBFBFB</color>
     <color name="wht03">#F7FBFBFB</color>
+    <color name="wht04">#FFECECEC</color>
 
     <color name="clear">#00FFFFFF</color>
 </resources>

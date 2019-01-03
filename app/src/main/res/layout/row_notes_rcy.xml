@@ -1,61 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.chauthai.swipereveallayout.SwipeRevealLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="16dp">
+    app:dragEdge="right"
+    app:mode="same_level">
 
-    <TextView
-        android:id="@+id/lastModifiedLBL"
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:fontFamily="@font/fira_mono"
-        android:textColor="@color/gry01"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="1M" />
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/headingLBL"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:fontFamily="@font/actor"
-        android:lines="1"
-        android:textColor="@color/blk01"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/lastModifiedLBL"
-        app:layout_constraintStart_toEndOf="@+id/lastModifiedLBL"
-        app:layout_constraintTop_toTopOf="@+id/lastModifiedLBL"
-        tools:text="CFLs and CFGs" />
+        <ImageView
+            android:id="@+id/noteAction1BTN"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:background="@color/gry02"
+            android:scaleType="center"
+            android:tint="@color/wht01"
+            tools:srcCompat="@drawable/ic_mail_40dp_40dp" />
 
-    <TextView
-        android:id="@+id/contentLBL"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:fontFamily="@font/fira_mono"
-        android:lines="2"
-        android:textColor="@color/gry01"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/headingLBL"
-        app:layout_constraintTop_toBottomOf="@+id/headingLBL"
-        tools:text="Different context-free grammars can generate the same context-free language." />
+        <ImageView
+            android:id="@+id/noteAction2BTN"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:background="@color/red01"
+            android:scaleType="center"
+            android:tint="@color/wht01"
+            tools:srcCompat="@drawable/ic_trash_40dp_40dp" />
 
-    <View
-        android:id="@+id/separatorPOV"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginTop="24dp"
-        android:background="@color/gry01"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/contentLBL"
-        app:layout_constraintTop_toBottomOf="@+id/contentLBL" />
+    </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/upperLayerPOV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/lastModifiedLBL"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/fira_mono"
+            android:includeFontPadding="false"
+            android:textColor="@color/gry01"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="1M" />
+
+        <TextView
+            android:id="@+id/headingLBL"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/actor"
+            android:includeFontPadding="false"
+            android:lines="1"
+            android:textColor="@color/blk01"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/lastModifiedLBL"
+            app:layout_constraintStart_toEndOf="@+id/lastModifiedLBL"
+            app:layout_constraintTop_toTopOf="@+id/lastModifiedLBL"
+            tools:text="CFLs and CFGs" />
+
+        <TextView
+            android:id="@+id/contentLBL"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/fira_mono"
+            android:includeFontPadding="false"
+            android:lines="2"
+            android:textColor="@color/gry01"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/headingLBL"
+            app:layout_constraintTop_toBottomOf="@+id/headingLBL"
+            tools:text="Different context-free grammars can generate the same context-free language." />
+
+        <View
+            android:id="@+id/separatorPOV"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="24dp"
+            android:background="@color/gry01"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/contentLBL"
+            app:layout_constraintTop_toBottomOf="@+id/contentLBL" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.chauthai.swipereveallayout.SwipeRevealLayout>

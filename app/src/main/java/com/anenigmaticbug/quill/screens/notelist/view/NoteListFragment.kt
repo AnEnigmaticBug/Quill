@@ -3,6 +3,8 @@ package com.anenigmaticbug.quill.screens.notelist.view
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,6 +26,7 @@ import com.anenigmaticbug.quill.screens.notelist.view.model.ViewLayerNote
 import com.anenigmaticbug.quill.screens.notelist.view.model.ViewLayerTag
 import com.anenigmaticbug.quill.screens.shared.core.model.Id
 import kotlinx.android.synthetic.main.fra_note_list.view.*
+import kotlinx.android.synthetic.main.viw_search_bar.view.*
 import kotlinx.android.synthetic.main.viw_side_drawer.view.*
 
 class NoteListFragment : Fragment(), NotesAdapter.ClickListener, TagsAdapter.ClickListener {
@@ -41,6 +44,33 @@ class NoteListFragment : Fragment(), NotesAdapter.ClickListener, TagsAdapter.Cli
         rootPOV.menuBTN.setOnClickListener {
             (rootPOV as SlidingPaneLayout).openPane()
         }
+
+        rootPOV.searchBTN.setOnClickListener {
+            (rootPOV as SlidingPaneLayout).closePane()
+            hidePriTopBar()
+            showSearchBar()
+        }
+
+        rootPOV.cancelSearchBTN.setOnClickListener {
+            viewModel.onEndSearchAction()
+            hideSearchBar()
+            showPriTopBar()
+        }
+
+        rootPOV.queryTXT.addTextChangedListener(object : TextWatcher {
+
+            override fun afterTextChanged(s: Editable?) {
+                viewModel.onSearchTextChanged(s.toString())
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+        })
 
         rootPOV.addNoteBTN.setOnClickListener {
             activity!!.supportFragmentManager.beginTransaction()
@@ -172,6 +202,20 @@ class NoteListFragment : Fragment(), NotesAdapter.ClickListener, TagsAdapter.Cli
             it.playTogether(animators)
             it.start()
         }
+    }
+
+    fun showSearchBar() {
+        val animator = ObjectAnimator.ofFloat(view!!.searchBarLIN, "alpha", 1f).apply {
+            duration = 300
+        }
+        animator.start()
+    }
+
+    fun hideSearchBar() {
+        val animator = ObjectAnimator.ofFloat(view!!.searchBarLIN, "alpha", 0f).apply {
+            duration = 300
+        }
+        animator.start()
     }
 
     private fun showWorkingState(tags: List<ViewLayerTag>, notes: List<ViewLayerNote>) {

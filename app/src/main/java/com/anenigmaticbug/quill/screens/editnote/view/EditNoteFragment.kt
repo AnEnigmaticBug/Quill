@@ -21,41 +21,12 @@ import com.anenigmaticbug.quill.screens.editnote.view.dialogs.InsertTagDialog
 import com.anenigmaticbug.quill.screens.editnote.view.model.UiOrder
 import com.anenigmaticbug.quill.screens.editnote.view.model.ViewLayerNote
 import kotlinx.android.synthetic.main.fra_edit_note.view.*
+import kotlinx.android.synthetic.main.viw_info_drawer.*
 import kotlinx.android.synthetic.main.viw_info_drawer.view.*
 
 class EditNoteFragment : Fragment(), TagsAdapter.ClickListener {
 
     private lateinit var viewModel: EditNoteViewModel
-
-    private val headingWatcher = object : TextWatcher {
-
-        override fun afterTextChanged(s: Editable?) {
-            viewModel.onUpdateHeadingAction(s.toString())
-        }
-
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
-        }
-
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
-        }
-    }
-
-    private val contentWatcher = object : TextWatcher {
-
-        override fun afterTextChanged(s: Editable?) {
-            viewModel.onUpdateContentAction(s.toString())
-        }
-
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
-        }
-
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
-        }
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val id = arguments!!.getLong("ID").let {
@@ -80,6 +51,35 @@ class EditNoteFragment : Fragment(), TagsAdapter.ClickListener {
             InsertTagDialog().show(childFragmentManager, "AddTag")
         }
 
+        rootPOV.headingTXT.addTextChangedListener(object : TextWatcher {
+
+            override fun afterTextChanged(s: Editable?) {
+                viewModel.onUpdateHeadingAction(s.toString())
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+        })
+        rootPOV.contentTXT.addTextChangedListener(object : TextWatcher {
+
+            override fun afterTextChanged(s: Editable?) {
+                viewModel.onUpdateContentAction(s.toString())
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+        })
+
         viewModel.order.observe(this, Observer {
             when(it) {
                 is UiOrder.ShowWorking -> showWorkingState(it.note)
@@ -101,8 +101,15 @@ class EditNoteFragment : Fragment(), TagsAdapter.ClickListener {
     }
 
     private fun showWorkingState(note: ViewLayerNote) {
-        view!!.headingTXT.setTextWithNotifyingWatcher(note.heading, headingWatcher)
-        view!!.contentTXT.setTextWithNotifyingWatcher(note.content, contentWatcher)
+
+        // The ifs are to avoid triggering TextWatcher and cause an infinite loop
+        if(view!!.headingTXT.text.toString() != note.heading) {
+            view!!.headingTXT.setText(note.heading)
+        }
+        if(view!!.contentTXT.text.toString() != note.content) {
+            view!!.contentTXT.setText(note.content)
+        }
+
         view!!.dateFDV.datetime = note.lastModified
         (view!!.tagsRCY.adapter as TagsAdapter).submitList(note.tags)
         view!!.wordCountLBL.text = note.wordCount.toString()
@@ -111,14 +118,5 @@ class EditNoteFragment : Fragment(), TagsAdapter.ClickListener {
 
     private fun showFailureState(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-    }
-
-    // Set's text without triggering watcher and preserves the cursor position
-    private fun EditText.setTextWithNotifyingWatcher(text: String, watcher: TextWatcher) {
-        removeTextChangedListener(watcher)
-        val cursorPos = selectionStart
-        setText(text)
-        setSelection(cursorPos)
-        addTextChangedListener(watcher)
     }
 }
